@@ -3,7 +3,7 @@
 Unity selbst wird nicht gebraucht. Als Gerüst dient ein vorhandenes UBOAT-Symbol-Bundle
 (Unity 2018.2, Klasse DWS.Common.Resources.AssetBundleDescriptor). Aus dem Gerüst bleiben nur
 die technischen Objekte (AssetBundle, MonoScript, Manifest) und je Symbol ein Texture2D/Sprite-Paar,
-deren Bilddaten vollständig durch unsere PNGs ersetzt werden. Alle übrigen Objekte und die
+deren Bilddaten vollständig durch unsere PNGs ersetzt werden (verschoben nach icons/verschiebung.json). Alle übrigen Objekte und die
 .resS-Datei mit fremden Bilddaten werden entfernt; danach wird geprüft, dass nichts davon übrig ist.
 
 Aufruf:
@@ -15,7 +15,7 @@ import uuid
 from pathlib import Path
 
 import UnityPy
-from PIL import Image
+from icon_offsets import shifted_icon
 
 BUNDLE_NAME = "uboat-smutje"
 # Spielinterner Name des Gegenstands -> PNG-Datei im Symbolordner
@@ -55,7 +55,7 @@ def build(template, icon_dir, out):
     for obj in sf.objects.values():
         if obj.type.name == "Texture2D":
             tex = obj.read()
-            img = Image.open(icon_dir / f"{tex.m_Name}.png").convert("RGBA")
+            img = shifted_icon(icon_dir, tex.m_Name)
             if img.size != (tex.m_Width, tex.m_Height):
                 raise SystemExit(f"{tex.m_Name}: {img.size} statt {(tex.m_Width, tex.m_Height)}")
             tex.image = img

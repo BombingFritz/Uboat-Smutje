@@ -34,12 +34,13 @@ zwei Bundles mit gleichem CAB-Namen nicht gleichzeitig laden kann. `tests/test_b
 Die `.manifest`-Datei neben dem Bundle hat `CRC: 0`. Ob das Spiel diese Datei überhaupt liest, ist
 [UNGEKLÄRT]; mit CRC 0 prüft Unity beim Laden keine Prüfsumme.
 
-## Ungeklärt bis zum ersten Spieltest
+## Spieltest (Nutzer, 23.11.2026)
 
-- Lädt das aktuelle Spiel (2026.1) ein Bundle im Format von Unity 2018.2? Alte Symbol-Mods sind so gebaut;
-  ob sie mit 2026.1 noch laufen, ist nicht bestätigt.
-- Stimmt `supportedGameVersions: ["2026.1"]`? Übernommen aus Mod 3247807531.
-- Verträgt das Spiel `steamFileId: 0` für einen nicht veröffentlichten Mod?
+- Das Spiel lädt den Mod samt Bundle im Format von Unity 2018.2; Manifest mit
+  `supportedGameVersions: ["2026.1"]` und `steamFileId: 0` wird angenommen.
+- Ananas und Bierdose erscheinen im Lager; das Spargel-Symbol war auf dem Screenshot nicht zu sehen.
+- Die Mengenzahl steht oben rechts über dem Symbol. Symbole deshalb leicht nach links oben gesetzt
+  (`icons/verschiebung.json`, zunächst 4 px links, 2 px oben); im Spiel noch nicht geprüft.
 
 ## Kombüse (für Phase 2)
 

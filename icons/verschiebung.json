@@ -1,0 +1,6 @@
+{
+  "_hinweis": "Verschiebung je Symbol in Pixeln beim Bau des Bundles: [x, y]; negativ x = nach links, negativ y = nach oben. Die PNGs selbst bleiben unverändert.",
+  "Vegetables": [-4, -2],
+  "Canned Bread": [-4, -2],
+  "Exotic Fruits": [-4, -2]
+}

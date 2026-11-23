@@ -9,6 +9,9 @@ import UnityPy
 from PIL import Image, ImageChops
 
 ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT / "tools"))
+from icon_offsets import load_offsets, shifted_icon  # noqa: E402
+
 BUNDLE = ROOT / "mod" / "Uboat-Smutje" / "Bundles" / "uboat-smutje"
 ICONS = ROOT / "icons"
 EXPECTED = {"Vegetables", "Canned Bread", "Exotic Fruits"}
@@ -39,9 +42,13 @@ check(spr_names == EXPECTED, f"Sprites: {sorted(spr_names)}")
 
 for o in types.get("Texture2D", []):
     tex = o.read()
-    src = Image.open(ICONS / f"{tex.m_Name}.png").convert("RGBA")
+    src = shifted_icon(ICONS, tex.m_Name)
     diff = ImageChops.difference(tex.image.convert("RGBA"), src).getbbox()
-    check(diff is None, f"{tex.m_Name}: Bild im Bundle pixelgleich mit icons/{tex.m_Name}.png")
+    off = load_offsets(ICONS).get(tex.m_Name, (0, 0))
+    check(diff is None, f"{tex.m_Name}: Bild im Bundle pixelgleich mit icons/{tex.m_Name}.png, verschoben um {off}")
+    orig = Image.open(ICONS / f"{tex.m_Name}.png").convert("RGBA")
+    check(src.getchannel("A").histogram() == orig.getchannel("A").histogram(),
+          f"{tex.m_Name}: durch die Verschiebung nichts abgeschnitten")
     check((tex.m_Width, tex.m_Height) == (102, 98), f"{tex.m_Name}: 102 x 98 px")
 
 for o in types.get("Sprite", []):

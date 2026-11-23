@@ -34,7 +34,9 @@ Siehe [docs/PHASE2.md](docs/PHASE2.md).
 
 Voraussetzung: Python 3 und `pip install -r requirements.txt`.
 
-Ein Bild austauschen: die Datei in `icons/` ersetzen, dann
+Ein Bild austauschen: die Datei in `icons/` ersetzen. Die Lage im Feld (z. B. damit die Mengenzahl oben
+rechts nichts verdeckt) steht in `icons/verschiebung.json` als `[x, y]` in Pixeln; negativ heißt nach
+links bzw. oben. Die PNGs selbst bleiben unverändert. Danach
 
 ```bash
 python tools/build_bundle.py <gerüst-bundle> icons mod/Uboat-Smutje/Bundles/uboat-smutje
