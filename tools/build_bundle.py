@@ -10,6 +10,7 @@ Aufruf:
   python tools/build_bundle.py <gerüst-bundle> <symbolordner> <ausgabe-bundle>
 """
 import hashlib
+import struct
 import sys
 import uuid
 from pathlib import Path
@@ -26,6 +27,32 @@ GUID_NS = uuid.UUID("6f0e1c8e-3b5a-4a59-9d0e-5b0a7a1f5e11")
 
 def guid_for(path):
     return uuid.uuid5(GUID_NS, f"{BUNDLE_NAME}/{path}").hex
+
+
+def full_rect_sprite(tree):
+    """Setzt Umriss und Zeichenbereich eines Sprites auf das volle Bildrechteck.
+
+    Die Sprites im Gerüst haben einen engen Umriss ("Tight Mesh") nach den alten Bildern; das Spiel zeichnet
+    nur innerhalb davon. Mit einem vollen Rechteck (Unity: Mesh Type "Full Rect") erscheint das ganze Bild.
+    """
+    rect, rd = tree["m_Rect"], tree["m_RD"]
+    w, h, ppu = rect["width"], rect["height"], tree["m_PixelsToUnits"]
+    px, py = tree["m_Pivot"]["x"] * w, tree["m_Pivot"]["y"] * h
+    x0, x1, y0, y1 = -px / ppu, (w - px) / ppu, -py / ppu, (h - py) / ppu
+    verts = [(x0, y1), (x1, y1), (x0, y0), (x1, y0)]
+    pos = b"".join(struct.pack("<3f", x, y, 0.0) for x, y in verts)
+    pos += b"\0" * (-len(pos) % 16)                     # Stream 1 beginnt 16-Byte-ausgerichtet
+    rd["m_VertexData"]["m_VertexCount"] = 4
+    rd["m_VertexData"]["m_DataSize"] = pos + b"\0" * (4 * 8)  # UV-Stream (2 x float), wie im Gerüst leer
+    rd["m_IndexBuffer"] = struct.pack("<6H", 0, 1, 2, 2, 1, 3)
+    sm = rd["m_SubMeshes"][0]
+    sm.update({"firstByte": 0, "indexCount": 6, "baseVertex": 0, "firstVertex": 0, "vertexCount": 4})
+    rd["m_SubMeshes"] = [sm]
+    rd["textureRect"] = {"x": 0.0, "y": 0.0, "width": float(w), "height": float(h)}
+    rd["textureRectOffset"] = {"x": 0.0, "y": 0.0}
+    rd["settingsRaw"] = 0                                # nicht gepackt, Mesh Type Full Rect
+    tree["m_PhysicsShape"] = [[{"x": x0, "y": y1}, {"x": x0, "y": y0}, {"x": x1, "y": y0}, {"x": x1, "y": y1}]]
+    return tree
 
 
 def build(template, icon_dir, out):
@@ -61,6 +88,9 @@ def build(template, icon_dir, out):
             tex.image = img
             tex.save()
             tex_by_name[tex.m_Name] = obj.path_id
+    for obj in sf.objects.values():
+        if obj.type.name == "Sprite":
+            obj.save_typetree(full_rect_sprite(obj.read_typetree()))
     missing = set(ICONS) - set(tex_by_name)
     if missing:
         raise SystemExit(f"Im Gerüst fehlen Symbole: {sorted(missing)}")

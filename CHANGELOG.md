@@ -13,8 +13,12 @@
 - Symbole beim Bau verschiebbar über `icons/verschiebung.json`; alle drei 4 px nach links und 2 px nach oben,
   damit die Mengenzahl weniger verdeckt.
 
+### Behoben
+- Oberer Teil der Bierdose (Deckel) fehlte im Spiel: Die Sprites hatten noch den engen Umriss der Gerüst-Bilder.
+  Umriss und Zeichenbereich sind jetzt das volle Bild 102 x 98.
+
 ### Geprüft
-- Im Spiel (Nutzer): Mod lädt, Ananas und Bierdose erscheinen.
+- Im Spiel (Nutzer): Mod lädt, Spargel, Ananas und Bierdose erscheinen.
 
 ### Noch nicht geprüft
-- Lage der Symbole nach der Verschiebung im Spiel; Spargel-Symbol im Spiel.
+- Im Spiel: vollständige Bierdose nach der Korrektur des Umrisses und Lage der Symbole nach der Verschiebung.

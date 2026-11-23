@@ -19,7 +19,10 @@
 - Im Bundle steckt zusätzlich ein `Manifest`-Objekt der Spielklasse
   `DWS.Common.Resources.AssetBundleDescriptor` (Assembly `com.uboat.game.dll`) mit der Liste
   `containedAssets` (`path` wie `Icons/Equipment/Vegetables`, dazu eine `guid`).
-- Lebensmittelsymbole: 102 x 98 px, RGBA32, ohne Mipmaps, Sprite mit 100 Pixeln pro Einheit.
+- Lebensmittelsymbole: 102 x 98 px, RGBA32, ohne Mipmaps, Sprite mit 100 Pixeln pro Einheit, Drehpunkt mittig.
+- Jedes Sprite hat einen eigenen Umriss (Mesh) und Zeichenbereich (`textureRect`). Das Spiel zeichnet nur
+  innerhalb davon. Die Gerüst-Sprites haben einen engen Umriss nach ihren alten Bildern („Tight“); bei
+  `Canned Bread` reichte er nur von Zeile 18 bis 86 (von oben gezählt).
 - Die beobachteten Bundles sind mit Unity 2018.2.21f1 gebaut.
 - Für Symbole ist keine Tabelle in `Data Sheets` nötig.
 
@@ -27,7 +30,8 @@
 
 Unity und die UBOAT-Modding-Werkzeuge stehen in der Cloud-Umgebung nicht zur Verfügung. `tools/build_bundle.py`
 nimmt deshalb ein vorhandenes Symbol-Bundle als Gerüst, entfernt alle fremden Objekte samt `.resS`-Datei,
-ersetzt die Bilddaten der drei Symbole durch unsere PNGs, baut Container, Preload-Tabelle und Manifest neu
+ersetzt die Bilddaten der drei Symbole durch unsere PNGs, setzt Umriss und Zeichenbereich jedes Sprites auf
+das volle Rechteck 102 x 98 (Unity: Mesh Type „Full Rect“), baut Container, Preload-Tabelle und Manifest neu
 auf und vergibt eigenen Bundle- und CAB-Namen (`uboat-smutje`). Ein eigener CAB-Name ist nötig, weil Unity
 zwei Bundles mit gleichem CAB-Namen nicht gleichzeitig laden kann. `tests/test_bundle.py` prüft das Ergebnis.
 
@@ -38,7 +42,9 @@ Die `.manifest`-Datei neben dem Bundle hat `CRC: 0`. Ob das Spiel diese Datei ü
 
 - Das Spiel lädt den Mod samt Bundle im Format von Unity 2018.2; Manifest mit
   `supportedGameVersions: ["2026.1"]` und `steamFileId: 0` wird angenommen.
-- Ananas und Bierdose erscheinen im Lager; das Spargel-Symbol war auf dem Screenshot nicht zu sehen.
+- Spargel, Ananas und Bierdose erscheinen im Spiel.
+- Der Deckel der Bierdose fehlte. Ursache: der enge Umriss aus dem Gerüst (siehe oben). Seitdem setzt der Bau
+  jedes Sprite auf das volle Rechteck; der Test prüft das. Im Spiel noch nicht bestätigt.
 - Die Mengenzahl steht oben rechts über dem Symbol. Symbole deshalb leicht nach links oben gesetzt
   (`icons/verschiebung.json`, zunächst 4 px links, 2 px oben); im Spiel noch nicht geprüft.
 

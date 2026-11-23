@@ -2,6 +2,7 @@
 
 Aufruf: python tests/test_bundle.py   (aus dem Repo-Wurzelordner; braucht UnityPy und Pillow)
 """
+import struct
 import sys
 from pathlib import Path
 
@@ -54,6 +55,17 @@ for o in types.get("Texture2D", []):
 for o in types.get("Sprite", []):
     spr = o.read()
     check(spr.m_RD.texture.read().m_Name == spr.m_Name, f"Sprite {spr.m_Name} zeigt auf eigene Textur")
+    # Früherer Fehler: Umriss aus dem Gerüst schnitt im Spiel den Deckel der Bierdose ab
+    t = o.read_typetree()
+    rd = t["m_RD"]
+    n = rd["m_VertexData"]["m_VertexCount"]
+    pts = struct.unpack(f"<{n * 3}f", bytes(rd["m_VertexData"]["m_DataSize"])[:n * 12])
+    xs, ys = pts[0::3], pts[1::3]
+    ppu = t["m_PixelsToUnits"]
+    full = (round((max(xs) - min(xs)) * ppu, 3), round((max(ys) - min(ys)) * ppu, 3)) == (102.0, 98.0)
+    tr = rd["textureRect"]
+    check(n == 4 and full and rd["settingsRaw"] == 0, f"Sprite {spr.m_Name}: Umriss ist das volle Rechteck 102 x 98")
+    check((tr["x"], tr["y"], tr["width"], tr["height"]) == (0, 0, 102, 98), f"Sprite {spr.m_Name}: Zeichenbereich ist das volle Bild")
 
 ab = types["AssetBundle"][0].read_typetree()
 check(ab["m_Name"] == ab["m_AssetBundleName"] == "uboat-smutje", "Bundle-Name uboat-smutje")
