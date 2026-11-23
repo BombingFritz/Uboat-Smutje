@@ -6,11 +6,12 @@ Mod für UBOAT (Deep Water Studio), der die Lebensmittel in der Kombüse auf eig
 
 | Lebensmittel im Spiel | interner Name | neues Symbol |
 |---|---|---|
-| Gemüse | `Vegetables` | Kiste mit grünem und weißem Spargel |
-| Dosenbrot | `Canned Bread` | Bierdosen |
-| Exotische Früchte | `Exotic Fruits` | Kiste mit Ananas |
+| Gemüse | `Vegetables` | Bund weißer Spargel |
+| Dosenbrot | `Canned Bread` | Bierdose |
+| Exotische Früchte | `Exotic Fruits` | Ananas |
 
-Die Symbole sind eigene Zeichnungen (`tools/draw_icons.py`), keine fremden Bilder.
+Die Bilder in `icons/` stellt der Nutzer bereit (PNG, 102 x 98 px, transparenter Hintergrund, Dateiname =
+interner Name). `tools/draw_icons.py` enthält nur die ersten gezeichneten Entwürfe.
 
 ![Vorschau](mod/Uboat-Smutje/Preview.png)
 
@@ -33,8 +34,9 @@ Siehe [docs/PHASE2.md](docs/PHASE2.md).
 
 Voraussetzung: Python 3 und `pip install -r requirements.txt`.
 
+Ein Bild austauschen: die Datei in `icons/` ersetzen, dann
+
 ```bash
-python tools/draw_icons.py icons
 python tools/build_bundle.py <gerüst-bundle> icons mod/Uboat-Smutje/Bundles/uboat-smutje
 python tools/make_preview.py
 python tests/test_bundle.py

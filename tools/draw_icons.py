@@ -1,7 +1,10 @@
-"""Zeichnet die Symbole von Uboat-Smutje (eigene Vektorzeichnungen, keine fremden Bilder).
+"""Zeichnet die ersten Entwürfe der Symbole (eigene Vektorzeichnungen).
+
+Seit dem 23.11.2026 stammen die Symbole in icons/ vom Nutzer; dieses Skript wird für den Bau nicht mehr
+gebraucht. Vorhandene Dateien überschreibt es nur mit --force.
 
 Ausgabe: 102 x 98 px RGBA, wie die Lebensmittelsymbole im Spiel.
-Aufruf: python tools/draw_icons.py <ausgabeordner>
+Aufruf: python tools/draw_icons.py <ausgabeordner> [--force]
 """
 import math
 import random
@@ -284,8 +287,14 @@ def render(name):
 
 
 if __name__ == "__main__":
-    out = Path(sys.argv[1] if len(sys.argv) > 1 else "icons")
+    args = [a for a in sys.argv[1:] if a != "--force"]
+    force = "--force" in sys.argv[1:]
+    out = Path(args[0] if args else "entwuerfe")
     out.mkdir(parents=True, exist_ok=True)
     for name in ICONS:
-        render(name).save(out / f"{name}.png")
-        print("geschrieben:", out / f"{name}.png")
+        target = out / f"{name}.png"
+        if target.exists() and not force:
+            print("übersprungen (vorhanden, --force zum Überschreiben):", target)
+            continue
+        render(name).save(target)
+        print("geschrieben:", target)
