@@ -1,0 +1,9 @@
+ManifestFileVersion: 0
+CRC: 0
+HashAppended: 0
+Assets:
+- Assets/Packages/uboat-smutje/Icons/Equipment/Canned Bread.png
+- Assets/Packages/uboat-smutje/Icons/Equipment/Exotic Fruits.png
+- Assets/Packages/uboat-smutje/Icons/Equipment/Vegetables.png
+- Assets/Packages/uboat-smutje/Manifest.asset
+Dependencies: []
