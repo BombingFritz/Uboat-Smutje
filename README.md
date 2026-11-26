@@ -9,6 +9,7 @@ Mod für UBOAT (Deep Water Studio), der die Lebensmittel in der Kombüse auf eig
 | Gemüse | `Vegetables` | Bund weißer Spargel |
 | Dosenbrot | `Canned Bread` | Bierdose |
 | Exotische Früchte | `Exotic Fruits` | Ananas |
+| Kaffee | `Coffee` | Pervitin-Röhrchen (nur das Bild; Name und Wirkung bleiben Kaffee) |
 
 Die Bilder in `icons/` stellt der Nutzer bereit (PNG, 102 x 98 px, transparenter Hintergrund, Dateiname =
 interner Name). `tools/draw_icons.py` enthält nur die ersten gezeichneten Entwürfe.
@@ -21,7 +22,7 @@ interner Name). `tools/draw_icons.py` enthält nur die ersten gezeichneten Entw�
    `%USERPROFILE%\AppData\LocalLow\Deep Water Studio\UBOAT\Mods\Uboat-Smutje`.
 2. Im UBOAT-Launcher den Mod aktivieren.
 
-Andere Mods, die dieselben Symbole ersetzen (z. B. „Authentic Goods“ oder „Pervitin“), überschreiben sich
+Andere Mods, die dieselben Symbole ersetzen (z. B. „Authentic Goods“ oder „Pervitin“, der auch Kaffee ändert), überschreiben sich
 gegenseitig. Welcher gewinnt, hängt von der Ladereihenfolge im Launcher ab.
 
 ## Phase 2 (geplant)

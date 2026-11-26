@@ -13,6 +13,8 @@
 - Symbole beim Bau verschiebbar über `icons/verschiebung.json`; alle drei 4 px nach links und 2 px nach oben,
   damit die Mengenzahl weniger verdeckt.
 
+- Kaffee (`Coffee`) zeigt ein Pervitin-Röhrchen (Bild vom Nutzer); Name und Wirkung unverändert.
+
 ### Behoben
 - Oberer Teil der Bierdose (Deckel) fehlte im Spiel: Die Sprites hatten noch den engen Umriss der Gerüst-Bilder.
   Umriss und Zeichenbereich sind jetzt das volle Bild 102 x 98.
@@ -21,4 +23,4 @@
 - Im Spiel (Nutzer): Mod lädt, Spargel, Ananas und Bierdose erscheinen.
 
 ### Noch nicht geprüft
-- Im Spiel: vollständige Bierdose nach der Korrektur des Umrisses und Lage der Symbole nach der Verschiebung.
+- Im Spiel: Kaffee-Symbol; vollständige Bierdose nach der Korrektur des Umrisses und Lage der Symbole nach der Verschiebung.

@@ -15,7 +15,7 @@ from icon_offsets import load_offsets, shifted_icon  # noqa: E402
 
 BUNDLE = ROOT / "mod" / "Uboat-Smutje" / "Bundles" / "uboat-smutje"
 ICONS = ROOT / "icons"
-EXPECTED = {"Vegetables", "Canned Bread", "Exotic Fruits"}
+EXPECTED = {"Vegetables", "Canned Bread", "Exotic Fruits", "Coffee"}
 fails = 0
 
 
@@ -86,7 +86,7 @@ check((script["m_Namespace"], script["m_ClassName"]) == ("DWS.Common.Resources",
       "Manifest-Skript ist die Spielklasse AssetBundleDescriptor")
 
 raw = b"".join(f.save() for f in bundle.files.values())
-for word in (b"authentic", b"Pervitin", b"MedKit", b"Sausages", b"Coffee", b"Cheese", b"Potatoes"):
+for word in (b"authentic", b"Pervitin", b"MedKit", b"Sausages", b"Cheese", b"Potatoes"):
     check(word.lower() not in raw.lower(), f"keine Reste von {word.decode()} im Bundle")
 
 print(f"\n{fails} Fehler" if fails else "\nAlle Prüfungen bestanden")

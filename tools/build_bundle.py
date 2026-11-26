@@ -20,7 +20,7 @@ from icon_offsets import shifted_icon
 
 BUNDLE_NAME = "uboat-smutje"
 # Spielinterner Name des Gegenstands -> PNG-Datei im Symbolordner
-ICONS = ["Vegetables", "Canned Bread", "Exotic Fruits"]
+ICONS = ["Vegetables", "Canned Bread", "Exotic Fruits", "Coffee"]
 KEEP_TYPES = {"AssetBundle", "MonoScript"}
 GUID_NS = uuid.UUID("6f0e1c8e-3b5a-4a59-9d0e-5b0a7a1f5e11")
 
